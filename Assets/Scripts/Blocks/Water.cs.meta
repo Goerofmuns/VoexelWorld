@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: 5c6aacf41fd1d2a459ca7533e80bb633
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - chunkGet: {fileID: 11400000, guid: fbbe987c2cc41df4c89bb960d760a8b6, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
