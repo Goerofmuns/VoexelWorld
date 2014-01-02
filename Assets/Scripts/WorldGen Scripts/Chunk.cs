@@ -138,6 +138,7 @@ public class Chunk : MonoBehaviour
       return block(x, y, z).tex();       
     }
 
+    #region CubeFaces
     void cubetop(int x, int y, int z, byte block)
     {
         verts.Add(new Vector3(x, y, z + 1));
@@ -222,4 +223,5 @@ public class Chunk : MonoBehaviour
 
         Cube(texturePos);
     }
+    #endregion
 }
