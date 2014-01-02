@@ -93,7 +93,7 @@ public class MenuGUI : MonoBehaviour
                 if (power == 0) { power = UnityEngine.Random.Range(1, 5); }
                 int stone = PerlinNoise(x, 0, z, scale, power, 1.2f);
                 stone += PerlinNoise(x, 300, z, 20, 4, 0) + 10;
-                int dirt = PerlinNoise(x, 100, z, 50, 3, 0) + 1;
+                //int dirt = PerlinNoise(x, 100, z, 50, 3, 0) + 1;
                 gdata[x, z] = stone;
                 gdata[x, z] = gdata[x, z] / 256;
                 for (int y = 0; y < worldY; y++)
@@ -102,7 +102,7 @@ public class MenuGUI : MonoBehaviour
                     {
                         sdata[x, y, z] = new Block(1);
                     }
-                    else if (y <= dirt + stone)
+                    else if (y <= 5 + stone)
                     {
                         sdata[x, y, z] = new Block(2);
                     }
