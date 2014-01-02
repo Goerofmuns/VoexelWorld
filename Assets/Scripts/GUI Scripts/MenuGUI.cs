@@ -10,7 +10,7 @@ public class MenuGUI : MonoBehaviour
 
     public int chunksize = 16;
     public int sliderloc;
-    
+
     float scale;
     float power;
     float layer;
@@ -71,12 +71,14 @@ public class MenuGUI : MonoBehaviour
             {
                 for (int y = 0; y < worldY; y++)
                 {
-                    int distanceX = ((worldX / 2) - x) * ((worldX / 2) - x);
-                    int distanceZ = ((worldZ / 2) - z) * ((worldZ / 2) - z);
+                    float theta = UnityEngine.Random.RandomRange(0, 2 * Mathf.PI);
+                    float distancetoCenter = UnityEngine.Random.RandomRange(0, 256 - theta);
 
-                    int distancetoCenter = (int)Mathf.Sqrt(distanceX + distanceZ);
+                    float distx = 256 + Mathf.Cos(theta) * distancetoCenter;
+                    float disty = 256 + Mathf.Sin(theta) * distancetoCenter;
+                    float distance = distx + disty;
 
-                    if (y > distancetoCenter / 10)
+                    if (y < distance / 100)
                     {
                         sdata[x, y, z] = new Block(0);
                     }
