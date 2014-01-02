@@ -15,9 +15,10 @@ public class MenuGUI : MonoBehaviour
     float power;
     float layer;
     int worldX = 512;
-    int worldY = 64;
+    int worldY = 128;
     int worldZ = 512;
     bool isGenerated = false;
+    bool genisland;
 
     Texture2D worldtex;
     GameObject relay;
@@ -34,13 +35,14 @@ public class MenuGUI : MonoBehaviour
         GUI.DrawTexture(new Rect((Screen.width / 2) - 500, 70, 250, 250), worldtex);
         GUI.Label(new Rect(550, 70, 40, 20), scale.ToString());
         GUI.Label(new Rect(550, 90, 40, 20), power.ToString());
-        scale = GUI.HorizontalSlider(new Rect(450, 70, 100, 20), scale, 1, 100.0f);
-        power = GUI.HorizontalSlider(new Rect(450, 90, 100, 20), power, 1, 5);
+        genisland = GUI.Toggle(new Rect(450, 135, 150, 20), genisland, "Generate Island");
+        scale = GUI.HorizontalSlider(new Rect(450, 70, 100, 20), scale, 1, 150.0f);
+        power = GUI.HorizontalSlider(new Rect(450, 90, 100, 20), power, 1, 30);
         if (GUI.Button(new Rect(450, 110, 250, 25), "Generate Map"))
         {
             GenNoiseArray();
             GenImage();
-            GenIsland();
+            if (genisland == true) { GenIsland(); Debug.Log("GENISLAND"); }
             relay = GameObject.Find("Relay");
             relay.GetComponent<DataRelay>().data = sdata;
             isGenerated = true;
@@ -55,7 +57,7 @@ public class MenuGUI : MonoBehaviour
             else
             {
                 GenNoiseArray();
-                GenIsland();
+                if (genisland == true) { GenIsland(); }
                 relay = GameObject.Find("Relay");
                 relay.GetComponent<DataRelay>().data = sdata;
                 Application.LoadLevel("3Dmain");
@@ -78,9 +80,10 @@ public class MenuGUI : MonoBehaviour
                     float disty = 256 + Mathf.Sin(theta) * distancetoCenter;
                     float distance = distx + disty;
 
-                    if (y < distance / 100)
+                    if (y > distance / 50)
                     {
                         sdata[x, y, z] = new Block(0);
+                        gdata[x, z] = 0;
                     }
                 }
             }
@@ -129,7 +132,7 @@ public class MenuGUI : MonoBehaviour
     int PerlinNoise(int x, int y, int z, float scale, float height, float power)
     {
         float rvalue;
-        rvalue = Noise.GetOctaveNoise(((double)x) / scale, ((double)y) / scale, ((double)z) / scale, 10);
+        rvalue = Noise.GetNoise(((double)x) / scale, ((double)y) / scale, ((double)z) / scale);
         rvalue *= height;
 
         if (power != 0)
