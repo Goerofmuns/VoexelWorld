@@ -1,6 +1,9 @@
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 2012 for Windows Desktop
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-vs", "Assembly-CSharp-vs.csproj", "{9A16F80B-EC17-8EA3-5ADA-49ED63AA3C5B}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{8BF3A3AB-F223-A78C-34CF-9086C80A0471}") = "VoexelWorld", "Assembly-CSharp-firstpass-vs.csproj", "{616CA546-BB63-E5FE-610F-4E805B293C58}"
+EndProject
+Project("{8BF3A3AB-F223-A78C-34CF-9086C80A0471}") = "VoexelWorld", "Assembly-CSharp-vs.csproj", "{9A16F80B-EC17-8EA3-5ADA-49ED63AA3C5B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -8,6 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{616CA546-BB63-E5FE-610F-4E805B293C58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{616CA546-BB63-E5FE-610F-4E805B293C58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{616CA546-BB63-E5FE-610F-4E805B293C58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{616CA546-BB63-E5FE-610F-4E805B293C58}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9A16F80B-EC17-8EA3-5ADA-49ED63AA3C5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9A16F80B-EC17-8EA3-5ADA-49ED63AA3C5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A16F80B-EC17-8EA3-5ADA-49ED63AA3C5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -16,16 +23,17 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-	GlobalSection(MonoDevelopProperties) = preSolution
+		GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0
-		$0.TextStylePolicy = $3
+		$0.TextStylePolicy = $1
 		$1.inheritsSet = null
 		$1.scope = text/x-csharp
 		$0.CSharpFormattingPolicy = $2
 		$2.inheritsSet = Mono
 		$2.inheritsScope = text/x-csharp
 		$2.scope = text/x-csharp
+		$0.TextStylePolicy = $3
 		$3.FileWidth = 120
 		$3.TabWidth = 4
 		$3.EolMarker = Unix
@@ -33,4 +41,5 @@ Global
 		$3.inheritsScope = text/plain
 		$3.scope = text/plain
 	EndGlobalSection
+
 EndGlobal
