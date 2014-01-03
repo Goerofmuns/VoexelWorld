@@ -5,7 +5,7 @@ using System.Collections;
 public class MenuGUI : MonoBehaviour
 {
 
-    public Block[,,] sdata;
+    public Block[, ,] sdata;
     float[,] gdata;
 
     public int chunksize = 16;
@@ -15,9 +15,10 @@ public class MenuGUI : MonoBehaviour
     float power;
     float layer;
     int worldX = 512;
-    int worldY = 64;
+    int worldY = 128;
     int worldZ = 512;
     bool isGenerated = false;
+    bool genisland;
 
     Texture2D worldtex;
     GameObject relay;
@@ -34,12 +35,14 @@ public class MenuGUI : MonoBehaviour
         GUI.DrawTexture(new Rect((Screen.width / 2) - 500, 70, 250, 250), worldtex);
         GUI.Label(new Rect(550, 70, 40, 20), scale.ToString());
         GUI.Label(new Rect(550, 90, 40, 20), power.ToString());
-        scale = GUI.HorizontalSlider(new Rect(450, 70, 100, 20), scale, 1, 100.0f);
-        power = GUI.HorizontalSlider(new Rect(450, 90, 100, 20), power, 1, 5);
-        if (GUI.Button(new Rect(450, 110, 250, 25),"Generate Map"))
+        genisland = GUI.Toggle(new Rect(450, 135, 150, 20), genisland, "Generate Island");
+        scale = GUI.HorizontalSlider(new Rect(450, 70, 100, 20), scale, 1, 150.0f);
+        power = GUI.HorizontalSlider(new Rect(450, 90, 100, 20), power, 1, 30);
+        if (GUI.Button(new Rect(450, 110, 250, 25), "Generate Map"))
         {
             GenNoiseArray();
             GenImage();
+            if (genisland == true) { GenIsland(); Debug.Log("GENISLAND"); }
             relay = GameObject.Find("Relay");
             relay.GetComponent<DataRelay>().data = sdata;
             isGenerated = true;
@@ -54,6 +57,7 @@ public class MenuGUI : MonoBehaviour
             else
             {
                 GenNoiseArray();
+                if (genisland == true) { GenIsland(); }
                 relay = GameObject.Find("Relay");
                 relay.GetComponent<DataRelay>().data = sdata;
                 Application.LoadLevel("3Dmain");
@@ -72,11 +76,11 @@ public class MenuGUI : MonoBehaviour
                     int distanceX = ((worldX / 2) - x) * ((worldX / 2) - x);
                     int distanceZ = ((worldZ / 2) - z) * ((worldZ / 2) - z);
 
-                    int distancetoCenter = (int)Mathf.Sqrt(distanceX + distanceZ);
-
-                    if (distancetoCenter > 100)
+                    int distance = (int)Mathf.Sqrt(distanceX + distanceZ);
+                    if (y > distance / 10)
                     {
                         sdata[x, y, z] = new Block(0);
+                        gdata[x, z] = 0;
                     }
                 }
             }
@@ -93,7 +97,6 @@ public class MenuGUI : MonoBehaviour
                 if (power == 0) { power = UnityEngine.Random.Range(1, 5); }
                 int stone = PerlinNoise(x, 0, z, scale, power, 1.2f);
                 stone += PerlinNoise(x, 300, z, 20, 4, 0) + 10;
-                int dirt = PerlinNoise(x, 100, z, 50, 3, 0) + 1;
                 gdata[x, z] = stone;
                 gdata[x, z] = gdata[x, z] / 256;
                 for (int y = 0; y < worldY; y++)
@@ -102,7 +105,7 @@ public class MenuGUI : MonoBehaviour
                     {
                         sdata[x, y, z] = new Block(1);
                     }
-                    else if (y <= dirt + stone)
+                    else if (y <= 5 + stone)
                     {
                         sdata[x, y, z] = new Block(2);
                     }
@@ -117,7 +120,7 @@ public class MenuGUI : MonoBehaviour
         {
             for (int z = 0; z < worldZ; z++)
             {
-                worldtex.SetPixel(x, z, new Color(gdata[x,z], gdata[x,z], gdata[x,z]));
+                worldtex.SetPixel(x, z, new Color(gdata[x, z], gdata[x, z], gdata[x, z]));
             }
         }
         worldtex.Apply();
@@ -126,7 +129,7 @@ public class MenuGUI : MonoBehaviour
     int PerlinNoise(int x, int y, int z, float scale, float height, float power)
     {
         float rvalue;
-        rvalue = Noise.GetOctaveNoise(((double)x) / scale, ((double)y) / scale, ((double)z) / scale, 10);
+        rvalue = Noise.GetNoise(((double)x) / scale, ((double)y) / scale, ((double)z) / scale);
         rvalue *= height;
 
         if (power != 0)

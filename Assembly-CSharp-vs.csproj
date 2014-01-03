@@ -49,6 +49,7 @@
      <Compile Include="Assets\Scripts\Blocks\Water.cs" />
      <Compile Include="Assets\Scripts\GUI Scripts\MenuGUI.cs" />
      <Compile Include="Assets\Scripts\Misc Scripts\ModifyTerrain.cs" />
+     <Compile Include="Assets\Scripts\Misc Scripts\MoveCamera.cs" />
      <Compile Include="Assets\Scripts\Misc Scripts\Noise.cs" />
      <Compile Include="Assets\Scripts\Misc Scripts\sunScript.cs" />
      <Compile Include="Assets\Scripts\WorldGen Scripts\Block.cs" />
@@ -57,6 +58,9 @@
      <Compile Include="Assets\Scripts\WorldGen Scripts\World.cs" />
  <Reference Include="Assembly-UnityScript-firstpass">
  <HintPath>Library\ScriptAssemblies\Assembly-UnityScript-firstpass.dll</HintPath>
+ </Reference>
+ <Reference Include="FortuneVoronoi">
+ <HintPath>Assets\Scripts\FortuneVoronoi.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>

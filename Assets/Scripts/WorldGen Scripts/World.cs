@@ -11,7 +11,7 @@ public class World : MonoBehaviour
 
     public int chunksize = 16;
     int worldX = 512;
-    int worldY = 64;
+    int worldY = 128;
     int worldZ = 512;
 
     void Start()
