@@ -73,14 +73,11 @@ public class MenuGUI : MonoBehaviour
             {
                 for (int y = 0; y < worldY; y++)
                 {
-                    float theta = UnityEngine.Random.RandomRange(0, 2 * Mathf.PI);
-                    float distancetoCenter = UnityEngine.Random.RandomRange(0, 256 - theta);
+                    int distanceX = ((worldX / 2) - x) * ((worldX / 2) - x);
+                    int distanceZ = ((worldZ / 2) - z) * ((worldZ / 2) - z);
 
-                    float distx = 256 + Mathf.Cos(theta) * distancetoCenter;
-                    float disty = 256 + Mathf.Sin(theta) * distancetoCenter;
-                    float distance = distx + disty;
-
-                    if (y > distance / 50)
+                    int distance = (int)Mathf.Sqrt(distanceX + distanceZ);
+                    if (y > distance / 10)
                     {
                         sdata[x, y, z] = new Block(0);
                         gdata[x, z] = 0;
