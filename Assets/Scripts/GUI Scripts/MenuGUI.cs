@@ -37,7 +37,7 @@ public class MenuGUI : MonoBehaviour
         GUI.Label(new Rect(550, 90, 40, 20), power.ToString());
         genisland = GUI.Toggle(new Rect(450, 135, 150, 20), genisland, "Generate Island");
         scale = GUI.HorizontalSlider(new Rect(450, 70, 100, 20), scale, 1, 150.0f);
-        power = GUI.HorizontalSlider(new Rect(450, 90, 100, 20), power, 1, 30);
+        power = GUI.HorizontalSlider(new Rect(450, 90, 100, 20), power, 0, 30);
         if (GUI.Button(new Rect(450, 110, 250, 25), "Generate Map"))
         {
             GenNoiseArray();
@@ -94,8 +94,7 @@ public class MenuGUI : MonoBehaviour
             for (int z = 0; z < worldZ; z++)
             {
                 if (scale == 0) { scale = UnityEngine.Random.Range(1, 100); }
-                if (power == 0) { power = UnityEngine.Random.Range(1, 5); }
-                int stone = PerlinNoise(x, 0, z, scale, power, 1.2f);
+                int stone = PerlinNoise(x, 0, z, scale, 1, power);
                 stone += PerlinNoise(x, 300, z, 20, 4, 0) + 10;
                 gdata[x, z] = stone;
                 gdata[x, z] = gdata[x, z] / 256;
@@ -129,7 +128,7 @@ public class MenuGUI : MonoBehaviour
     int PerlinNoise(int x, int y, int z, float scale, float height, float power)
     {
         float rvalue;
-        rvalue = Noise.GetNoise(((double)x) / scale, ((double)y) / scale, ((double)z) / scale);
+        rvalue = Noise.GetOctaveNoise(((double)x) / scale, ((double)y) / scale, ((double)z) / scale, 5);
         rvalue *= height;
 
         if (power != 0)
