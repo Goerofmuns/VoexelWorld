@@ -39,7 +39,7 @@ public class ModifyTerrain : MonoBehaviour
            GetBlockCenter(5).OnActivate(GetBlockCenter(5), Mathf.RoundToInt(GetLocCenter(5, false).x), Mathf.RoundToInt(GetLocCenter(5, false).y), Mathf.RoundToInt(GetLocCenter(5, false).z));
         }
 
-        LoadChunks(GameObject.FindGameObjectWithTag("Player").transform.position, 48, 48);
+        LoadChunks(GameObject.FindGameObjectWithTag("Player").transform.position, 512, 48);
     }
 
     void OnGUI()
