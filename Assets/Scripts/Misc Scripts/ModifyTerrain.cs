@@ -15,7 +15,7 @@ public class ModifyTerrain : MonoBehaviour
     void Start()
     {
         world = gameObject.GetComponent("World") as World;
-        cameraGO = GameObject.FindGameObjectWithTag("MainCamera");
+        cameraGO = GameObject.FindGameObjectWithTag("Player");
         Screen.showCursor = false;
         Screen.lockCursor = true;
         print(BlockTypes.types.Count);

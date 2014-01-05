@@ -41,8 +41,9 @@ public class MenuGUI : MonoBehaviour
         if (GUI.Button(new Rect(450, 110, 250, 25), "Generate Map"))
         {
             GenNoiseArray();
+            if (genisland == true) { GenIsland(); }
+            GenArray();
             GenImage();
-            if (genisland == true) { GenIsland(); Debug.Log("GENISLAND"); }
             relay = GameObject.Find("Relay");
             relay.GetComponent<DataRelay>().data = sdata;
             isGenerated = true;
@@ -58,6 +59,7 @@ public class MenuGUI : MonoBehaviour
             {
                 GenNoiseArray();
                 if (genisland == true) { GenIsland(); }
+                GenArray();
                 relay = GameObject.Find("Relay");
                 relay.GetComponent<DataRelay>().data = sdata;
                 Application.LoadLevel("3Dmain");
@@ -73,31 +75,25 @@ public class MenuGUI : MonoBehaviour
             {
                 for (int y = 0; y < worldY; y++)
                 {
-                    int distanceX = ((worldX / 2) - x) * ((worldX / 2) - x);
-                    int distanceZ = ((worldZ / 2) - z) * ((worldZ / 2) - z);
+                    float distanceX = ((worldX / 2) - x) * ((worldX / 2) - x);
+                    float distanceZ = ((worldZ / 2) - z) * ((worldZ / 2) - z);
 
-                    int distance = (int)Mathf.Sqrt(distanceX + distanceZ);
-                    if (y > distance / 10)
-                    {
-                        sdata[x, y, z] = new Block(0);
-                        gdata[x, z] = 0;
-                    }
+                    float distance = Mathf.Sqrt(distanceX + distanceZ);
+                    distance = distance / 512;
+
+                    gdata[x, z] -= distance;
                 }
             }
         }
     }
 
-    void GenNoiseArray()
+    void GenArray()
     {
         for (int x = 0; x < worldX; x++)
         {
             for (int z = 0; z < worldZ; z++)
             {
-                if (scale == 0) { scale = UnityEngine.Random.Range(1, 100); }
-                int stone = PerlinNoise(x, 0, z, scale, 1, power);
-                stone += PerlinNoise(x, 300, z, 20, 4, 0) + 10;
-                gdata[x, z] = stone;
-                gdata[x, z] = gdata[x, z] / 256;
+                int stone = (int)(gdata[x, z] * 50);
                 for (int y = 0; y < worldY; y++)
                 {
                     if (y <= stone)
@@ -125,17 +121,23 @@ public class MenuGUI : MonoBehaviour
         worldtex.Apply();
     }
 
-    int PerlinNoise(int x, int y, int z, float scale, float height, float power)
+    void GenNoiseArray()
+    {
+        for (int x = 0; x < worldX; x++)
+        {
+            for (int z = 0; z < worldZ; z++)
+            {
+                gdata[x, z] = (float)(PerlinNoise(x, 0, z, scale, 1));
+            }
+        }
+    }
+
+    float PerlinNoise(int x, int y, int z, float scale, float power)
     {
         float rvalue;
-        rvalue = Noise.GetOctaveNoise(((double)x) / scale, ((double)y) / scale, ((double)z) / scale, 5);
-        rvalue *= height;
+        rvalue = Noise.GetOctaveNoise(x /scale, y/scale,  z/scale, 5);
 
-        if (power != 0)
-        {
-            rvalue = Mathf.Pow(rvalue, power);
-        }
-        return (int)rvalue;
+        return rvalue;
     }
 
 }
