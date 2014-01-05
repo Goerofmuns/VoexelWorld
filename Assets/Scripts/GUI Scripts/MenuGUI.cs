@@ -12,6 +12,7 @@ public class MenuGUI : MonoBehaviour
     public int sliderloc;
 
     float scale;
+    float freq;
     int octaves;
     float layer;
     int worldX = 512;
@@ -40,6 +41,7 @@ public class MenuGUI : MonoBehaviour
         GUI.Label(new Rect(550, 90, 40, 20), octaves.ToString());
         scale = GUI.HorizontalSlider(new Rect(450, 70, 100, 20), scale, 1, 150.0f);
         octaves = (int)GUI.HorizontalSlider(new Rect(450, 90, 100, 20), octaves, 0, 5);
+        freq = GUI.HorizontalSlider(new Rect(450, 150, 100, 20), freq, 0, 5);
         domodulo = GUI.Toggle(new Rect(450, 130, 100, 20), domodulo, "FUNKYMODE");
         if (GUI.Button(new Rect(450, 110, 250, 25), "Generate Map"))
         {
@@ -146,8 +148,12 @@ public class MenuGUI : MonoBehaviour
 
     float PerlinNoise(int x, int y, int z, float scale, int octaves)
     {
+        LibNoise.Perlin p = new LibNoise.Perlin();
+        p.NoiseQuality = LibNoise.NoiseQuality.Standard;
+        p.OctaveCount = octaves;
+        p.Frequency = .5;
         float rvalue;
-        rvalue = Noise.GetOctaveNoise(x /scale, y/scale,  z/scale, octaves);
+        rvalue = (float)p.GetValue(x / scale, y / scale, z / scale);
 
         return rvalue;
     }
